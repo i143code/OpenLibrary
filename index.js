@@ -4,15 +4,15 @@ var bodyParser = require("body-parser");
 var mongodb = require("mongodb");
 var ObjectID = mongodb.ObjectID;
 
-var AUTHOR_COLLECTION = "ashish";
+var AUTHOR_COLLECTION = "authors";
 
 var app = express();
 app.use(bodyParser.json());
 
-// Create a database variable outside of the database
+
 var db;
 
-mongodb.MongoClient.connect("mongodb://ashish:ashish@ds119578.mlab.com:19578/cloudcomputing2", function (err, database) {
+mongodb.MongoClient.connect("mongodb://ashish:ashish@ds127998.mlab.com:27998/project2_cloud", function (err, database) {
   if (err) {
     console.log(err);
     process.exit(1);
@@ -22,7 +22,7 @@ mongodb.MongoClient.connect("mongodb://ashish:ashish@ds119578.mlab.com:19578/clo
   console.log("Database connection ready");
 
   // Initialize the app.
-  var server = app.listen(process.env.PORT || 8080, function () {
+  var server = app.listen(process.env.PORT ||3000, function () {
     var port = server.address().port;
     console.log("App now running on port", port);
   });
@@ -48,15 +48,16 @@ app.get("/authors", function(req, res) {
 
 app.get("/authorsOne", function(req, res) {
 
+  var authorsByvalue = "/works/";
+  var id= "OL15678982W";
+
   // {awards: {$elemMatch: {award:'National Medal', year:1975}}}
-  db.collection(AUTHOR_COLLECTION).findOne({ "name":"Palmer J. Holden"}, function(err, doc) {
+  db.collection(AUTHOR_COLLECTION).findOne({ "key":authorsByvalue+id}, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to get contact");
     } else {
-      // res.status(200).json(doc);
-      // JSON.stringify(doc, null, "  ");
-      // JSON.stringify(res, null, 2)
-      console.log(doc)
+
+      res.status(200).json(doc);
     }
   });
 });
