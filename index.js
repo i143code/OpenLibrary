@@ -37,7 +37,7 @@ function handleError(res, reason, message, code) {
 app.get("/authors", function(req, res) {
   db.collection(AUTHOR_COLLECTION).find({}).toArray(function(err, docs) {
     if (err) {
-      handleError(res, err.message, "Failed to get contacts.");
+      handleError(res, err.message, "Failed to get authors.");
     } else {
       res.status(200).json(docs);
     }
