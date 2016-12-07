@@ -45,11 +45,12 @@ app.get("/authors", function(req, res) {
 });
 
 
+//get detailed informtion
+app.get("/work/:id", function(req, res) {
 
-app.get("/authorsOne", function(req, res) {
-
+ var id = req.params.id;
   var authorsByvalue = "/works/";
-  var id= "OL15678982W";
+  // var id= "OL15678982W";
 
   // {awards: {$elemMatch: {award:'National Medal', year:1975}}}
   db.collection(AUTHOR_COLLECTION).findOne({ "key":authorsByvalue+id}, function(err, doc) {
@@ -61,3 +62,19 @@ app.get("/authorsOne", function(req, res) {
     }
   });
 });
+
+app.get("/search/:word",function(req,res){
+  var word = req.params.word;
+  //  var authorsByvalue = "/works/";
+   // var id= "OL15678982W";
+
+   // {awards: {$elemMatch: {award:'National Medal', year:1975}}}
+   db.collection(AUTHOR_COLLECTION).findOne({ "title": word}, function(err, doc) {
+     if (err) {
+       handleError(res, err.message, "Failed to get contact");
+     } else {
+
+       res.status(200).json(doc);
+     }
+   });
+})
