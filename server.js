@@ -2,6 +2,10 @@ var express = require("express");
 var path = require("path");
 var bodyParser = require("body-parser");
 var mongodb = require("mongodb");
+var requestify = require('requestify');
+var Client = require('node-rest-client').Client;
+
+var client = new Client();
 var ObjectID = mongodb.ObjectID;
 
 var AUTHOR_COLLECTION = "authors";
@@ -51,7 +55,6 @@ app.get("/work/:id", function(req, res) {
  var id = req.params.id;
   var authorsByvalue = "/works/";
   // var id= "OL15678982W";
-
   // {awards: {$elemMatch: {award:'National Medal', year:1975}}}
   db.collection(AUTHOR_COLLECTION).findOne({ "key":authorsByvalue+id}, function(err, doc) {
     if (err) {
@@ -63,6 +66,7 @@ app.get("/work/:id", function(req, res) {
   });
 });
 
+//find by title
 app.get("/search/:word",function(req,res){
   var word = req.params.word;
   //  var authorsByvalue = "/works/";
@@ -77,4 +81,13 @@ app.get("/search/:word",function(req,res){
        res.status(200).json(doc);
      }
    });
+})
+
+//find author name
+app.get('/authorname/:id',function(req,res){
+     var id = req.params.id;
+    client.get("https://openlibrary.org/authors/"+ id+".json", function (data, response) {
+    res.status(200).json(data);
+  });
+
 })
