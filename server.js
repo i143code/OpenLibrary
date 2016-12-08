@@ -53,6 +53,7 @@ app.get("/authors", function(req, res) {
 app.get("/work/:id", function(req, res) {
 
  var id = req.params.id;
+ console.log(id);
   var authorsByvalue = "/works/";
   // var id= "OL15678982W";
   // {awards: {$elemMatch: {award:'National Medal', year:1975}}}
