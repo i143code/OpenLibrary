@@ -8,7 +8,7 @@ var Client = require('node-rest-client').Client;
 var client = new Client();
 var ObjectID = mongodb.ObjectID;
 
-var AUTHOR_COLLECTION = "authors";
+var AUTHOR_COLLECTION = "author";
 
 var app = express();
 app.use(bodyParser.json());
@@ -60,7 +60,6 @@ app.get("/work/:id", function(req, res) {
     if (err) {
       handleError(res, err.message, "Failed to get contact");
     } else {
-
       res.status(200).json(doc);
     }
   });
